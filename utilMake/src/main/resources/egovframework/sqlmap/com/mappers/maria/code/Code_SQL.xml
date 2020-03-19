@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="egovframework.com.code.service.impl.CodeMapper">
+
+	<!-- <select id="selectCodeList" parameterType="codeVO" resultType="egovMap">
+		WITH RECURSIVE CTE AS
+		(
+		 SELECT     CODE_VALUE,
+		            CODE_NAME,
+		            CODE_PARENT,
+		            CODE_ORDER,
+		            CODE_VALUE AS LEVEL
+		 FROM       SAMPLE_CODE
+		 WHERE CODE_PARENT IS NULL
+		 UNION ALL
+		 SELECT     R.CODE_VALUE,
+		            R.CODE_NAME,
+		            R.CODE_PARENT,
+		            R.CODE_ORDER,
+		            CONCAT(CTE.level,'-',R.CODE_VALUE) as LEVEL
+		 FROM       SAMPLE_CODE R
+		 INNER JOIN CTE
+		         ON R.CODE_PARENT = CTE.CODE_VALUE
+		)
+		SELECT * FROM CTE ORDER BY LEVEL,CODE_ORDER;
+
+		SELECT *
+		FROM(
+			SELECT *
+			FROM(
+				SELECT
+				    1 AS GN
+					,ROW_NUMBER() OVER(ORDER BY CODE_ORDER) AS RN
+					,CODE_VALUE
+					,CODE_NAME
+					,CODE_PARENT
+					,CODE_ORDER
+				FROM sample_code
+				WHERE CODE_PARENT IS NULL
+			) A
+			UNION ALL
+			SELECT *
+			FROM(
+				SELECT
+				    2 AS GN
+				   ,ROW_NUMBER() OVER(ORDER BY CODE_ORDER,CODE_PARENT) AS RN
+					,CODE_VALUE
+					,CODE_NAME
+					,CODE_PARENT
+					,CODE_ORDER
+				FROM sample_code
+				WHERE CODE_PARENT IS NOT NULL
+			) B
+		)C
+		ORDER BY GN,RN
+	</select> -->
+
+	<resultMap id="codeMap" type="codeVO">
+		<result property="codeValue" column="CODE_VALUE"/>
+		<result property="codeName" column="CODE_NAME"/>
+		<result property="codeParent" column="CODE_PARENT"/>
+		<result property="codeOrder" column="CODE_ORDER"/>
+	</resultMap>
+
+	<select id="selectCodeList" parameterType="egovMap" resultMap="codeMap">
+		SELECT
+			 CODE_VALUE
+			,CODE_NAME
+			,CODE_PARENT
+			,CODE_ORDER
+		FROM sample_code
+		ORDER BY CODE_PARENT,CODE_VALUE
+	</select>
+
+	<insert id="codeRegisterInsert" parameterType="codeVO">
+			INSERT INTO SAMPLE_CODE
+				(
+				    CODE_PARENT
+				  , CODE_VALUE
+				  , CODE_NAME
+				  , CODE_ORDER
+				 )
+			VALUES (
+				    #{codeParent}
+				  , #{codeValue}
+				  , #{codeName}
+				  , #{codeOrder}
+				   )
+	</insert>
+
+	<resultMap id="codeMapMenuList" type="codeVO">
+		<result property="codeValue" column="CODE_VALUE"/>
+		<result property="codeName" column="CODE_NAME"/>
+		<result property="codeParent" column="CODE_PARENT"/>
+		<result property="codeOrder" column="CODE_ORDER"/>
+		<result property="codeUseYn" column="CODE_USE_YN"/>
+	</resultMap>
+
+	<select id="selectCodeMenuList" parameterType="codeVO" resultMap="codeMapMenuList">
+		SELECT
+			 CODE_VALUE
+			,CODE_NAME
+			,CODE_PARENT
+			,CODE_ORDER
+			,CODE_USE_YN
+		FROM SAMPLE_CODE
+		ORDER BY CODE_PARENT,CODE_VALUE
+		LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+	</select>
+
+	<select id="selectCodeMenuListTotCnt" parameterType="codeVO" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM SAMPLE_CODE
+		ORDER BY CODE_PARENT,CODE_VALUE
+	</select>
+
+	<resultMap id="codeMapMenuInfo" type="codeVO">
+		<result property="codeValue" column="CODE_VALUE"/>
+		<result property="codeName" column="CODE_NAME"/>
+		<result property="codeParent" column="CODE_PARENT"/>
+		<result property="codeParentNm" column="CODE_PARENT_NM"/>
+		<result property="codeOrder" column="CODE_ORDER"/>
+		<result property="codeUseYn" column="CODE_USE_YN"/>
+	</resultMap>
+
+	<select id="selectCodeMenuInfo" parameterType="egovMap" resultMap="codeMapMenuInfo">
+		SELECT
+			 CODE_VALUE
+			,CODE_NAME
+			,CODE_PARENT
+			,(SELECT CODE_NAME FROM SAMPLE_CODE WHERE CODE_VALUE = AA.CODE_PARENT)AS CODE_PARENT_NM
+			,CODE_ORDER
+			,CODE_USE_YN
+		FROM SAMPLE_CODE AA
+		WHERE AA.CODE_VALUE = #{codeValue}
+		ORDER BY CODE_PARENT,CODE_VALUE
+	</select>
+
+</mapper>
