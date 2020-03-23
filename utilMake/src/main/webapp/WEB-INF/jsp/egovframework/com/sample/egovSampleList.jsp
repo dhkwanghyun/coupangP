@@ -147,7 +147,7 @@
                   </li>
               </ul>
         	</div>
-        	<utag:commCd/>
+        	<utag:commCd pCodeValue="A" codeAllYn="false"/>
         </div>
     </form:form>
 </body>

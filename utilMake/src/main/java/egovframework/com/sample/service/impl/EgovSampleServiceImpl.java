@@ -63,7 +63,7 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 	// TODO mybatis 사용
 	@Resource(name="sampleMapper")
 	private SampleMapper sampleDAO;
-	
+
 	//fileUtil
 	@Resource(name="fileUtils")
 	private FileUtils fileUtils;
@@ -88,12 +88,12 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		LOGGER.debug(vo.toString());
 
 		sampleDAO.insertSample(vo);
-		
+
 		/*List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, request);
 		for(int i=0, size=list.size(); i<size; i++){
 			sampleDAO.insertFile(list.get(i));
 		}*/
-		
+
 		return id;
 	}
 
@@ -155,26 +155,30 @@ public class EgovSampleServiceImpl extends EgovAbstractServiceImpl implements Eg
 		return sampleDAO.selectSampleListTotCnt(searchVO);
 	}
 
-	
+
 	@Override
 	@Transactional
 	public boolean fileTestInsert(SampleVO sampleVO, HttpServletRequest files) throws Exception {
-		
+
+
+		//id값 반환
+		String id = sampleDAO.selectNextId();
+		sampleVO.setId(id);
 		//시쿼스 반환
 		sampleDAO.insertFileSample(sampleVO);
-		
-		
+
+
 		if(sampleVO.getSampleSeq()!=0){
 			Map<String,Object> map = new HashMap<>();
 			map.put("tableName", "file_sample");
 			map.put("idx", sampleVO.getSampleSeq());
-			
+
 			List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(map, files);
 			for(int i=0, size=list.size(); i<size; i++){
 				sampleDAO.insertFile(list.get(i));
 			}
 		}
-		
+
 		return false;
 	}
 

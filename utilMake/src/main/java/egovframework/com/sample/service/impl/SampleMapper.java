@@ -95,4 +95,6 @@ public interface SampleMapper {
 
 	List<?> selectFileList(SampleVO sampleVO) throws Exception;
 
+	String selectNextId() throws Exception;
+
 }

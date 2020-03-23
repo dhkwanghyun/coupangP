@@ -137,4 +137,12 @@
 		ORDER BY CODE_PARENT,CODE_VALUE
 	</select>
 
+	<update id="codeUpdate" parameterType="codeVO">
+		UPDATE SAMPLE_CODE SET
+			CODE_NAME = #{codeName},
+			CODE_ORDER = #{codeOrder},
+			CODE_USE_YN = #{codeUseYn}
+		WHERE CODE_VALUE = #{codeValue}
+	</update>
+
 </mapper>

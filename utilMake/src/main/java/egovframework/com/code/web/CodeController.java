@@ -1,7 +1,9 @@
 package egovframework.com.code.web;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -100,7 +102,6 @@ public class CodeController {
 			}
 		}*/
 		JsonArray codeListToJson = CodeUtil.codeListToJson(codeVO.getSrchCode(), false);
-		System.out.println("codeGroupList Size : "+codeListToJson);
 		ModelAndView modelAndView = new ModelAndView("jsonView","jsonList",codeListToJson.toString());
 		return modelAndView;
 	}
@@ -117,6 +118,20 @@ public class CodeController {
 		codeVO = codeService.selectCodeMenuInfo(codeVO);
 		model.addAttribute("codeVO", codeVO);
 		return "code/codeDetail";
+	}
+
+	@RequestMapping(value = "/code/codeUpdate.ajax" , method = RequestMethod.POST)
+	public ModelAndView codeUpdate(@ModelAttribute("codeVO") CodeVO codeVO, ModelMap model) throws Exception {
+		int a = codeService.codeUpdate(codeVO);
+		Map<String, String> map = new HashMap<>();
+		if(a>0){
+			map.put("data", "Y");
+			codeService.selectCodeList();
+		}else{
+			map.put("data", "N");
+		}
+		ModelAndView modelAndView = new ModelAndView("jsonView",map);
+		return modelAndView;
 	}
 
 

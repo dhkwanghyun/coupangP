@@ -13,17 +13,5 @@
 			    FILE_SEQ = #{fileSeq}
 		]]>
 	</select>
-	
-	<select id="selectSampleCodeList" parameterType="egovMap" resultType="egovMap">
-		<![CDATA[
-			SELECT
-			    CODE_PARENT,
-			    CODE_VALUE,
-			    CODE_NAME,
-			    CODE_ORDER
-			FROM
-			    SAMPLE_CODE
-		]]>
-	</select>
 
 </mapper>

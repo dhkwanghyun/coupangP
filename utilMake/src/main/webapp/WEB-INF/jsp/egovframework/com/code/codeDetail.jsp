@@ -30,6 +30,28 @@
     	$(document).ready(function(){
 
     	})
+
+    	function fn_code_update(){
+			var sendData = $('#dataForm').serialize();
+			$.ajax({
+				type: "POST",
+				url : "/code/codeUpdate.ajax",
+				data: sendData,
+				async: true,
+				success : function(data, status, xhr) {
+					console.log(data.data);
+					if(data.data == 'Y'){
+						alert("수정되었습니다.");
+					}
+
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					console.log(data);
+					//alert(jqXHR.responseText);
+				}
+			});
+		}
+
     </script>
 </head>
 <body style="text-align:center; margin:0 auto; display:inline; padding-top:100px;">
@@ -91,7 +113,7 @@
     		<ul>
     			<li>
                     <span class="btn_blue_l">
-                        <a href="">수정</a>
+                        <a href="javascript:fn_code_update();">수정</a>
                         <img src="<c:url value='/images/egovframework/example/btn_bg_r.gif'/>" style="margin-left:6px;" alt=""/>
                     </span>
                     <span class="btn_blue_l">

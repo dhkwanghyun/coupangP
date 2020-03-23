@@ -1,5 +1,6 @@
 package egovframework.com.cmmn.util;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -51,14 +52,29 @@ public class CodeUtil{
 			for(int i=0;i<codeJsonArrayTmp.size();i++){
 				JsonObject data = (JsonObject) codeJsonArrayTmp.get(i);
 				String codeParent = data.get("codeParent").toString().replace("\"", "");
-				System.out.println("codeParent : "+codeParent);
-				System.out.println("srchCode : "+srchCode);
 				if(codeParent.equals(srchCode)){
 					codeJsonArray.add(codeJsonArrayTmp.get(i));
 				}
 			}
 			return codeJsonArray;
 		}
+	}
+
+	public static List<CodeVO> codeList(String pSrchCode,boolean codeAllYn){
+		List<CodeVO> codeVoList = CodeUtil.getCodeUtilStr();
+		if(codeAllYn){
+			return codeVoList;
+		}else{
+			List<CodeVO> codeVoListTemp = new ArrayList<CodeVO>();
+			for(int i=0;i<codeVoList.size();i++){
+				CodeVO codeVO = codeVoList.get(i);
+				if(codeVO.getCodeParent().equals(pSrchCode)){
+					codeVoListTemp.add(codeVO);
+				}
+			}
+			return codeVoListTemp;
+		}
+
 	}
 
 }

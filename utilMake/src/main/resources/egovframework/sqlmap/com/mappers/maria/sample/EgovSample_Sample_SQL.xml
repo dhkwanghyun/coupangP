@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="egovframework.com.sample.service.impl.SampleMapper">
-	
+
 	<select id="selectFileList" parameterType="SampleVO" resultType="egovMap">
 			SELECT
 			    FILE_SEQ,
@@ -16,14 +16,14 @@
 
 	<insert id="insertFile" parameterType="egovMap">
 			INSERT INTO FILE_TB
-				( 
+				(
 				    TABLE_NAME
 				  , BOARD_IDX
 				  , ORIGINAL_FILE_NAME
 				  , STORED_FILE_NAME
 				  , FILE_SIZE
 				 )
-			VALUES ( 
+			VALUES (
 				    #{tableName}
 				  , #{boardIdx}
 				  , #{originalFileName}
@@ -32,15 +32,19 @@
 				   )
 	</insert>
 
+	<select id="selectNextId" resultType="string">
+		SELECT IFNULL(CONCAT('SAMPLE-',LPAD(COUNT(*)+1,5,'0')),'SAMPLE-00001') AS ID FROM SAMPLE
+	</select>
+
 	<insert id="insertFileSample" parameterType="SampleVO">
 			INSERT INTO SAMPLE
-				( 
-				    NAME
+				( ID
+				  , NAME
 				  , DESCRIPTION
 				  , USE_YN
 				  , REG_USER )
-			VALUES ( 
-				    #{name}
+			VALUES ( #{id}
+				  , #{name}
 				  , #{description}
 				  , #{useYn}
 				  , #{regUser} )

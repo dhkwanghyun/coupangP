@@ -86,5 +86,10 @@ public class CodeServiceImpl extends EgovAbstractServiceImpl implements CodeServ
 		return codeDAO.selectCodeMenuListTotCnt(codeVO);
 	}
 
+	@Override
+	public int codeUpdate(CodeVO codeVO) {
+		return codeDAO.codeUpdate(codeVO);
+	}
+
 
 }

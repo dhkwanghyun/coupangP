@@ -10,6 +10,8 @@ import egovframework.com.code.vo.CodeVO;
 public class MultiTagHandler extends SimpleTagSupport{
 	protected String name;
 	protected String values;
+	protected String pCodeValue="";
+	protected boolean codeAllYn=false;
 
 	public String getName() {
 		return name;
@@ -23,6 +25,20 @@ public class MultiTagHandler extends SimpleTagSupport{
 	public void setValues(String values) {
 		this.values = values;
 	}
+	public String getpCodeValue() {
+		return pCodeValue;
+	}
+	public void setpCodeValue(String pCodeValue) {
+		this.pCodeValue = pCodeValue;
+	}
+	public boolean isCodeAllYn() {
+		return codeAllYn;
+	}
+	public void setCodeAllYn(boolean codeAllYn) {
+		this.codeAllYn = codeAllYn;
+	}
+
+
 
 	public String generateSelectTag(List<CodeVO> codeList){
 		StringBuffer sb = new StringBuffer("\n");

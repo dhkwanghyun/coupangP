@@ -10,5 +10,15 @@
 	<name>commCd</name>
 	<tag-class>egovframework.com.cmmn.taglib.CmmCodeTagHandler</tag-class>
 	<body-content>scriptless</body-content>
+	<attribute>
+		<name>pCodeValue</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
+	<attribute>
+		<name>codeAllYn</name>
+		<required>true</required>
+		<rtexprvalue>true</rtexprvalue>
+	</attribute>
  </tag>
 </taglib>

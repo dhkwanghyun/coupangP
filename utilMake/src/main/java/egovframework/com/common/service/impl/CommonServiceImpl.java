@@ -14,7 +14,7 @@ import egovframework.rte.psl.dataaccess.util.EgovMap;
 @Service("commonService")
 public class CommonServiceImpl implements CommonService{
 	Logger log = Logger.getLogger(this.getClass());
-	
+
 	@Resource(name="egovFileMapper")
 	private EgovFileMapper EgovFileDAO;
 
@@ -23,8 +23,4 @@ public class CommonServiceImpl implements CommonService{
 		return EgovFileDAO.selectFileInfo(map);
 	}
 
-	@Override
-	public List<EgovMap> selectSampleCodeList(Map<String, Object> map) throws Exception{
-		return EgovFileDAO.selectSampleCodeList(map);
-	}
 }

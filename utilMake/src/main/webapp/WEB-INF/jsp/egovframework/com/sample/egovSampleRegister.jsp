@@ -28,11 +28,11 @@
     <title>Sample <c:if test="${registerFlag == 'create'}"><spring:message code="button.create" /></c:if>
                   <c:if test="${registerFlag == 'modify'}"><spring:message code="button.modify" /></c:if>
     </title>
-    
+
     <!--For Commons Validator Client Side-->
     <script type="text/javascript" src="<c:url value='/cmmn/validator.do'/>"></script>
     <validator:javascript formName="sampleVO" staticJavascript="false" xhtml="true" cdata="false"/>
-    
+
     <script type="text/javaScript" language="javascript" defer="defer">
 
         /* 글 목록 화면 function */
@@ -40,13 +40,13 @@
            	document.detailForm.action = "<c:url value='/egovSampleList.do'/>";
            	document.detailForm.submit();
         }
-        
+
         /* 글 삭제 function */
         function fn_egov_delete() {
            	document.detailForm.action = "<c:url value='/deleteSample.do'/>";
            	document.detailForm.submit();
         }
-        
+
         /* 글 등록 function */
         function fn_egov_save() {
         	frm = document.detailForm;
@@ -60,7 +60,7 @@
 				$.ajax({
 					type:"post",
 					enctype: 'multipart/form-data',
-					url: "/uploadAjax.ajax",
+					url: "/addSample.do",
 		            data: data,
 		            processData: false,
 		            contentType: false,
@@ -148,7 +148,7 @@
                     	<c:forEach var="row" items="${list }">
 						<p>
 							<input type="hidden" id="fileSeq" value="${row.fileSeq }">
-							<a href="#this" name="file">${row.originalFileName }</a> 
+							<a href="#this" name="file">${row.originalFileName }</a>
 							(${row.fileSize }kb)
 						</p>
 						</c:forEach>
@@ -211,24 +211,24 @@
 	var gfv_count = 1;
 
 	$(document).ready(function(){
-		
+
 		$("#addFile").on("click", function(e){ //파일 추가 버튼
 			e.preventDefault();
 			fn_addFile();
 		});
-		
+
 		$("a[name='delete']").on("click", function(e){ //삭제 버튼
 			e.preventDefault();
 			fn_deleteFile($(this));
 		});
-		
+
 		$("a[name='file']").on("click", function(e){ //파일 이름
 			e.preventDefault();
 			fn_downloadFile($(this));
 		});
-		
+
 	});
-	
+
 	function fn_addFile(){
 		var str = "<p><input type='file' name='file_"+(gfv_count++)+"'><a href='#this' class='btn' name='delete'>삭제</a></p>";
 		$("#fileDiv").append(str);
@@ -237,11 +237,11 @@
 			fn_deleteFile($(this));
 		});
 	}
-	
+
 	function fn_deleteFile(obj){
 		obj.parent().remove();
 	}
-	
+
 	function fn_downloadFile(obj){
 		var fileSeq = obj.parent().find("#fileSeq").val();
 		var comSubmit = new ComSubmit();

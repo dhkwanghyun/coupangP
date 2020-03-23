@@ -41,6 +41,4 @@ public interface EgovFileMapper {
 
 	Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;
 
-	List<EgovMap> selectSampleCodeList(Map<String, Object> map) throws Exception;
-
 }

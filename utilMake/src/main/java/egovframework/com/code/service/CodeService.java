@@ -48,4 +48,6 @@ public interface CodeService {
 
 	int selectCodeMenuListTotCnt(CodeVO codeVO);
 
+	int codeUpdate(CodeVO codeVO);
+
 }

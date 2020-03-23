@@ -49,4 +49,6 @@ public interface CodeMapper {
 
 	int selectCodeMenuListTotCnt(CodeVO codeVO);
 
+	int codeUpdate(CodeVO codeVO);
+
 }
